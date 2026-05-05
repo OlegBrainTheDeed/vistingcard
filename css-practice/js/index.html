@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Моя визитка | Экономика, управление и право</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #eef2f9 0%, #e0e8f0 100%);
+            color: #1a2c3e;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* --- СТИЛИ ДЛЯ ВИЗИТКИ - КАРТОЧКИ, АНИМАЦИИ --- */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.8rem;
+            margin: 2rem 0 2rem 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 2rem;
+            padding: 1.8rem;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.25s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.7);
+            backdrop-filter: blur(2px);
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 28px 40px -16px rgba(0, 0, 0, 0.18);
+            background: #ffffff;
+            border-color: #cbdde9;
+        }
+
+        .card-icon {
+            font-size: 2.2rem;
+            color: #2c6280;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            border-left: 4px solid #2c6280;
+            padding-left: 0.9rem;
+            letter-spacing: -0.3px;
+        }
+
+        .card-text {
+            color: #2c3e44;
+            font-size: 0.95rem;
+            line-height: 1.55;
+        }
+
+        .card-text p {
+            margin-bottom: 0.7rem;
+        }
+
+        .card-text ul {
+            padding-left: 1.2rem;
+            margin: 0.7rem 0;
+        }
+
+        .card-text li {
+            margin: 0.4rem 0;
+        }
+
+        .highlight {
+            font-weight: 700;
+            color: #1e5a7a;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #eaf1f7;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-top: 0.6rem;
+            color: #1a4e6e;
+        }
+
+        hr {
+            margin: 1rem 0;
+            border: 0;
+            height: 1px;
+            background: #dee6ed;
+        }
+
+        /* Шапка профиля с фото */
+        .profile {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            animation: fadeSlide 0.7s ease-out;
+        }
+
+       
+        .photo-frame {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 1rem;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .profile-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 15px 25px -8px rgba(0,0,0,0.2);
+            border: 4px solid white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #eef2fa; /* фон на случай, если фото не загрузилось */
+        }
+
+        .profile-photo:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.25);
+        }
+
+        
+        .fallback-icon {
+            display: none;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(120deg, #1f3b4c, #2b5c7a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.7px;
+        }
+
+        .sub-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(37, 95, 126, 0.12);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #1b5a7c;
+            margin: 0.6rem 0.3rem;
+            backdrop-filter: blur(2px);
+        }
+
+        .qualities {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .quality-bubble {
+            background: white;
+            border-radius: 40px;
+            padding: 0.4rem 1.2rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            border: 1px solid #cde0ec;
+            color: #1f5e81;
+        }
+
+        .quality-bubble i {
+            margin-right: 6px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.8rem;
+            font-size: 0.8rem;
+            color: #5d7e94;
+            border-top: 1px solid #cddfea;
+        }
+
+        .btn-message {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #255f7e;
+            color: white;
+            padding: 0.6rem 1.6rem;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: 0.2s;
+            text-decoration: none;
+            margin-top: 0.8rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-message:hover {
+            background: #1b4a64;
+            transform: scale(1.02);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+        }
+
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 700px) {
+            .container {
+                padding: 1.2rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .card-title {
+                font-size: 1.3rem;
+            }
+            .card-grid {
+                gap: 1.2rem;
+            }
+            .photo-frame {
+                width: 110px;
+                height: 110px;
+            }
+        }
+
+        
+        .photo-note {
+            font-size: 0.7rem;
+            color: #547e9a;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div class="profile">
+        <div class="photo-frame">
+            
+            <img class="profile-photo" 
+                 src="https://i.oneme.ru/i?r=BTE2sh_eZW7g8kugOdIm2NotOD4AXW7HP2halQ0qlpk8VWaHT241XyoRp9qmGDZDdZI"
+                 alt="Фото профиля"
+                 onerror="this.onerror=null; this.src='https://via.placeholder.com/200x200?text=Добавьте+фото'; this.style.objectFit='cover';">
+        </div>
+        
+        <div class="photo-note">
+            <i class="fas fa-camera"></i> 
+        </div>
+        <h1>Меня зовут Малинина Валерия Евгеньевна</h1>
+        <div>
+            <span class="sub-badge"><i class="fas fa-landmark"></i> Экономика, управление и право</span>
+            <span class="sub-badge"><i class="fas fa-star"></i> Будущий специалист</span>
+        </div>
+        <div class="qualities">
+            <div class="quality-bubble"><i class="fas fa-check-circle"></i> Ответственная</div>
+            <div class="quality-bubble"><i class="fas fa-eye"></i> Внимательная</div>
+            <div class="quality-bubble"><i class="fas fa-heart"></i> Целеустремленная</div>
+        </div>
+    </div>
+
+    <!--  основная информация  -->
+    <div class="card-grid">
+        <!-- Карточка 1 -->
+        <div class="card">
+            <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
+            <div class="card-title">Моя учёба</div>
+            <div class="card-text">
+                <p>🎓 Студентка <span class="highlight">факультета экономики, управления и права</span>. Получаю фундаментальные знания в трех направлениях:</p>
+                <ul>
+                    <li>📊 Экономический анализ, финансы, налогообложение</li>
+                    <li>⚖️ Основы гражданского права и документооборота</li>
+                    <li>📈 Менеджмент, управление проектами, HR</li>
+                </ul>
+                <p>Стремлюсь сочетать экономический расчет и правовую грамотность для эффективных решений.</p>
+            </div>
+        </div>
+
+        <!-- Карточка 2 -->
+        <div class="card">
+            <div class="card-icon"><i class="fas fa-clipboard-list"></i></div>
+            <div class="card-title">Ключевые качества</div>
+            <div class="card-text">
+                <p><i class="fas fa-check-circle" style="color:#2c6280; width: 18px;"></i> <span class="highlight">Ответственность</span> — беру на себя обязательства, никогда не нарушаю дедлайны, довожу начатое до конца.</p>
+                <p><i class="fas fa-search" style="color:#2c6280;"></i> <span class="highlight">Внимательность</span> — замечаю мелкие детали, ошибки в документах, что критически важно в экономике и праве.</p>
+                <p>✨ Эти качества помогают мне в аналитике, работе с договорами и управлении задачами. Я — надёжный член команды.</p>
+                <div>
+                    <span class="tag">Точность</span>
+                    <span class="tag">Организованность</span>
+                    <span class="tag">Самоконтроль</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Карточка 3 -->
+        <div class="card">
+            <div class="card-icon"><i class="fas fa-book"></i></div>
+            <div class="card-title">Чтение книг</div>
+            <div class="card-text">
+                <p>📚 <span class="highlight">Книги — моя страсть</span>. Чтение развивает мышление, расширяет кругозор и тренирует внимание к деталям.</p>
+                <ul>
+                    <li>🕵️‍♀️ <strong>Детективы и юридические триллеры</strong> — оттачивают логику и дедукцию.</li>
+                    <li>📘 <strong>Бизнес-литература</strong> — помогает понимать экономические модели и управленческие решения.</li>
+                    <li>🏛️ <strong>Классика / историческая проза</strong> — учит анализировать мотивы людей.</li>
+                </ul>
+                <p>«Каждая книга — это тренировка концентрации и способность выделять суть».</p>
+            </div>
+        </div>
+
+        <!-- Карточка 4 -->
+        <div class="card">
+            <div class="card-icon"><i class="fas fa-utensils"></i></div>
+            <div class="card-title">Кулинария</div>
+            <div class="card-text">
+                <p>🍲 <span class="highlight">Обожаю готовить!</span> Для меня кулинария — увлекательный процесс, где важна точность, внимание и творчество.</p>
+                <p>✨ Соблюдение рецептуры, баланс вкусов, контроль времени — как в экономических расчетах. Ответственность за результат — любимое блюдо для семьи и друзей.</p>
+                <p>🥘 Люблю экспериментировать с разными кухнями и всегда довожу блюдо до совершенства. Это помогает развивать терпение и вкус к деталям.</p>
+                <div>
+                    <span class="tag">Выпечка</span>
+                    <span class="tag">Итальянская кухня</span>
+                    <span class="tag">Авторские рецепты</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Карточка 5 -->
+        <div class="card">
+            <div class="card-icon"><i class="fas fa-chart-simple"></i></div>
+            <div class="card-title">Проф. навыки</div>
+            <div class="card-text">
+                <p>📌 <span class="highlight">Аналитические способности</span> — работа с цифрами, Excel, построение таблиц и диаграмм.</p>
+                <p>⚙️ Базовые знания правовых систем (КонсультантПлюс, Гарант), понимание структуры договоров.</p>
+                <p>📋 Умение планировать время, вести документацию, составлять отчеты — навыки, которые я развиваю на факультете и в рамках учебных проектов.</p>
+                <p>🎯 В будущем хочу развиваться в области корпоративного права или финансового менеджмента.</p>
+            </div>
+        </div>
+
+        <!-- Карточка 6 -->
+        <div class="card">
+            <div class="card-icon"><i class="fas fa-address-card"></i></div>
+            <div class="card-title">Контакты & миссия</div>
+            <div class="card-text">
+                
+                <p><i class="fab fa-telegram"></i> <strong>Telegram:</strong> @hae01soo</p>
+                <hr>
+                <p>🌟 <span class="highlight">Моя цель</span> — применить знания в экономике, управлении и праве на практике. Ищу стажировку в сфере бизнес-консалтинга или юридической поддержки.</p>
+                <p>Открыта для новых знакомств, проектов и предложений, где ценятся ответственность и внимательное отношение к делу.</p>
+                
+            </div>
+        </div>
+    </div>
+
+   
+    <div style="background: #ffffffd9; border-radius: 2rem; padding: 1.2rem 2rem; text-align: center; margin: 1rem 0 0.5rem; box-shadow: 0 5px 14px rgba(0,0,0,0.05);">
+        <p style="font-weight: 500; color: #1f5a79;"><i class="fas fa-quote-left" style="margin-right: 6px; opacity: 0.7;"></i> Ответственность + Внимательность + Любовь к чтению и кулинарии = моя формула эффективного роста в экономике, управлении и праве <i class="fas fa-quote-right" style="margin-left: 6px; opacity: 0.7;"></i></p>
+    </div>
+
+    <footer>
+        <i class="far fa-copyright"></i> 2026 Малинина Валерия | Сайт-визитка | Факультет экономики, управления и права
+    </footer>
+</div>
+
+
+</body>
+</html>
